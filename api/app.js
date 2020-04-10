@@ -29,7 +29,7 @@ app.use(cors());
 
 /*----------------------Require route-----------------------*/
 const index                       = require('./routes/index');
-const userIndexRoute              = require('./routes/user/index');
+const covidreport                 = require('./routes/covidreport');
 /*----------------------------------------------------------*/
 
 //connect_mongo
@@ -89,7 +89,7 @@ app.use(session(
 
 /*---------All Routes----------*/ 
 app.use('/', index);
-app.use('/user', userIndexRoute);
+app.use('/covidreport', covidreport);
 /*-----------------------------*/
 
 

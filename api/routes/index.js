@@ -5,10 +5,15 @@ const bodyParser              = require('body-parser');
 const httpResponse            = require('../helper').HttpResponse;
 const sendError 		      = httpResponse.sendError;
 const sendSuccess			  = httpResponse.sendSuccess;
+const controller              = require('../controller');
+const dataController          = controller.maindata;
 
-
-router.get('/',function(req, res, next) {
+router.post('/',function(req, res, next) {
     res.send("working");
 });
+
+router.post('/gt_cvd_data',dataController.maindata.fetchCovidData);
+
+
 
 module.exports = router;

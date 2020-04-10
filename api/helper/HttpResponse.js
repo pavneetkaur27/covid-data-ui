@@ -2,7 +2,7 @@ const constants = require('./Constants');
 const Errors = require('./Errors');
 const isUndefined = require('bvalid').isUndefined;
 
-const sendResError = (_r, e, e_idx, s_c) => {
+const sendError = (_r, e, e_idx, s_c) => {
 	console.trace(e);
 	var errMsg;
 	var errCode;
@@ -24,7 +24,7 @@ const sendResError = (_r, e, e_idx, s_c) => {
 	});
 }
 
-const sendResSuccess = (_r,_d)=>{
+const sendSuccess = (_r,_d)=>{
 	return _r.status(constants.HTTP_STATUS.OK).send({
 		data: _d,
 		suc: true
@@ -32,6 +32,6 @@ const sendResSuccess = (_r,_d)=>{
 }
 
 module.exports = {
-	ResError: sendResError,
-	ResSuccess: sendResSuccess
+	sendError: sendError,
+	sendSuccess: sendSuccess
 };
