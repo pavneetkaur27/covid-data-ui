@@ -11,10 +11,8 @@ Actually, there are two separated apps. The Client which serves the FrontEnd (us
 ## How to run the Client
 1. In another terminal, navigate to the `client` directory.
 2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the app
+3. Run `npm start` to start the app in production or Run `npm local` to run in local environment. 
+NOTE: Create log directories path as mentioned in package.json if running with `npm start`
 
 ## Check if they are connected
-1. With the two apps running, open your browser in http://localhost:3000/.
-2. If you see a webpage saying `Welcome to React`, it means the FrontEnd is working.
-3. If the same webpage has the phrase `API is working properly`, it means the API is working.
-4. Enjoy!
+With the two apps running, open your browser in http://localhost:9000/.
