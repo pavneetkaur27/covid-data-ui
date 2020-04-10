@@ -1,14 +1,10 @@
-module.exports = function(client,config,logger){
+module.exports = function(client,config){
 
 
 if(config.REDIS_PASSWORD && config.REDIS_PASSWORD.length>0){
     client.auth(config.REDIS_PASSWORD,function(err,reply) {
       if(err){
         console.log(err);
-        logger.error({"msg":"redis_server_error","p":{
-          host : config.REDIS_HOST,
-          port : config.REDIS_PORT
-        },"er":err});
       }else{
         console.log("["+reply+"]","Redis Authenticated");
       }
@@ -22,10 +18,6 @@ client.on('ready',function() {
 
 client.on("error", function (err) {
   console.log("Redis error:-" + err);
-  logger.error({"msg":"redis_server_error","p":{
-    host : config.REDIS_HOST,
-    port : config.REDIS_PORT
-  },"er":err});
 });
 
 }

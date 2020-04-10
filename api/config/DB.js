@@ -14,12 +14,12 @@ mongoose.connection.on('connected', function () {
 
 //on error
 mongoose.connection.on('error',function (err) {
-    logger.error("Error occur in mongo");
+    // logger.error("Error occur in mongo");
     console.log('Error occur in mongo '+ err);
 });
 
 //On disconnected
 mongoose.connection.on('disconnected', function () {
-    logger.error("Mongo connection disconnected");
+    // logger.error("Mongo connection disconnected");
     console.log('Mongo connection disconnected');
 });

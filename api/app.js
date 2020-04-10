@@ -12,8 +12,6 @@ const helmet                      = require('helmet');
 const server_debug                = require('debug')('Server');
 const utils                       = require('./utils');
 const compression                 = require('compression');
-const loggerConf                  = require('./loggers/log4js_module').getLogger;
-const logger                      = loggerConf("express");
 const cors                        = require('cors')
 
 const config                      = require('./config');
@@ -32,19 +30,18 @@ app.use(cors());
 /*----------------------Require route-----------------------*/
 const index                       = require('./routes/index');
 const userIndexRoute              = require('./routes/user/index');
-const adminIndexRoute             = require('./routes/admin/index');
 /*----------------------------------------------------------*/
 
 //connect_mongo
-config.db;
+// config.db;
 
 //connect_redis
 const client  = redis.createClient({
   host : config.REDIS_HOST,
   port : config.REDIS_PORT
 });
-config.redis(client,sConf,logger);
-
+// config.redis(client,sConf,logger);
+config.redis(client,sConf);
 
 app.use(express.static(path.join(__dirname,"public")));
 app.use(function(req, res, next) {
@@ -93,7 +90,6 @@ app.use(session(
 /*---------All Routes----------*/ 
 app.use('/', index);
 app.use('/user', userIndexRoute);
-app.use('/admin', adminIndexRoute);
 /*-----------------------------*/
 
 
@@ -108,12 +104,11 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   if(err.message){
-    logger.error(err.message);
     var errMsg = err.message;
-    logger.error({"msg":"internal_server_error","p":req.body,"er":errMsg});
+    console.log("err "+ errMsg);
   }else{
         var errMsg = err;
-        logger.error({"msg":"internal_server_error","p":req.body,"er":errMsg});
+        console.log("err "+ errMsg);
   }
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
