@@ -1,3 +1,6 @@
+export const API_ENDPOINT = 'http://localhost:3000';
+
+
 export const NODE_VALUES = {
     "CONTANIER_NODE"    : '1',
     "LEAF_NODE"         : '2'

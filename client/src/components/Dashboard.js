@@ -24,7 +24,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-      loading: state.lrnrReducer.loading,
+      loading: state.covidReducer.loading,
   }
 }
 

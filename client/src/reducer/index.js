@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import lrnrReducer from './lrnrReducer';
+import covidReducer from './covidReducer';
 
 export default combineReducers({
-    lrnrReducer
+    covidReducer
 })
