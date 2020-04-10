@@ -14,7 +14,7 @@ export default function ItemSwitchComponent() {
             <div>
                 <img src={SidebarIcon}  aria-label="open drawer" />
             </div>
-            <div className="dis-flex " >
+            <div classame="dis-flex " >
                 <div className={["item-text-style",(activeitem == 1) ? 'active-menu' : ''].join(' ')} onClick={() => handleTabChange(1)}>ALL</div>
                 <div className={["item-text-style",(activeitem == 2) ? 'active-menu' : ''].join(' ')} onClick={() =>handleTabChange(2)}>Board</div>
                 <div className={["item-text-style",(activeitem == 3) ? 'active-menu' : ''].join(' ')} onClick={() =>handleTabChange(3)}>Graph</div>
