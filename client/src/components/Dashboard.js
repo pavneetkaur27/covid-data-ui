@@ -14,7 +14,6 @@ class Dashboard extends Component {
   render(){
     return (
       <div className="main-body">
-
         <Loader loading={this.props.loading}/>
         <MainNavbar />
       </div>

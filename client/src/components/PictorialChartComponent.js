@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import { withRouter } from 'react-router-dom';
 import {fetchCovidCountries,fetchCovidData} from '../actions/covidAction';
 import {Bar, ComposedChart,Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import Loader from './shared/Loader';
 
 class Dashboard extends Component {
   constructor(props){
@@ -58,7 +59,7 @@ class Dashboard extends Component {
           );
       }else{
           return (
-              <div></div>
+            <Loader loading={this.props.loading}/>
           )
       }
     
@@ -67,7 +68,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-      covidPanel : state.covidReducer
+    loading: state.covidReducer.loading,
+    covidPanel : state.covidReducer
   }
 }
 

@@ -9,21 +9,20 @@ class Dashboard extends Component {
   constructor(props){
     super(props);
     this.state = {
-        selected_country : 'None'
+        selected_country : 'ALL'
     }
   }
 
   componentDidMount(){
     this.props.fetchCovidCountries();
+    this.props.fetchCovidData({country_id : this.state.selected_country});
   }
 
   changeCountryFilter = (e) =>{
-      this.setState({
-        selected_country : e.target.value
-      })
-      if(e.target.value != 'None'){
+        this.setState({
+            selected_country : e.target.value
+        })
         this.props.fetchCovidData({country_id : e.target.value});
-      }
   } 
 
   refreshCovidData = () =>{
@@ -39,13 +38,13 @@ class Dashboard extends Component {
             <Select className="country-dropdown"
                 value={this.state.selected_country}
                 onChange={this.changeCountryFilter} 
-                placeholder="None"
+                placeholder="ALL"
                 inputProps={{
                     name: 'country_name',
                     id: 'country_name',
                 }}
                 > 
-                <MenuItem value={'None'} key={'None'}>None</MenuItem>
+                <MenuItem value={'ALL'} key={'ALL'}>ALL</MenuItem>
                  {!this.props.covidPanel || (!this.props.covidPanel.covidcountries ) ? null 
                     : this.props.covidPanel.covidcountries.map(country =>{
                         return (

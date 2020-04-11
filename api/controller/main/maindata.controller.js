@@ -54,15 +54,15 @@ exports.fetchCovidData = function(req,res,next){
         return sendError(res,'invalid_parameters','invalid_parameters');
     }
 
-    if(req.body.cntry){
+    if(req.body.cntry && req.body.cntry!= 'ALL' ){
         query_string    = {
             country : req.body.cntry
         }
     }
 
-    CovidCountry.findOne({
-        _id : req.body.cntry
-    },{
+    CovidCountry.findOne(
+        query_string
+    ,{
         country_name : 1
     },function(err, covidcountry){
         if(err){
@@ -94,8 +94,8 @@ exports.fetchCovidData = function(req,res,next){
                     if(!covidcases_by_date[covidcase.c_date]){
                         covidcases_by_date[covidcase.c_date] = {};
                     }
-                    covidcases_by_date[covidcase.c_date].confirmed_cases = covidcase.confirmed ? covidcase.confirmed : 0 ;
-                    covidcases_by_date[covidcase.c_date].death_cases = covidcase.deaths ?covidcase.deaths : 0;
+                    covidcases_by_date[covidcase.c_date].confirmed_cases    = covidcases_by_date[covidcase.c_date].confirmed_cases ? (covidcases_by_date[covidcase.c_date].confirmed_cases + (covidcase.confirmed ? covidcase.confirmed : 0 ) ): (covidcase.confirmed ? covidcase.confirmed : 0 );
+                    covidcases_by_date[covidcase.c_date].death_cases        = covidcases_by_date[covidcase.c_date].death_cases ? (covidcases_by_date[covidcase.c_date].death_cases + (covidcase.deaths ? covidcase.deaths : 0 ) ) : (covidcase.deaths ?covidcase.deaths : 0);
                 }
 
                 // console.log(covidcases_by_date);
@@ -128,7 +128,6 @@ exports.fetchCovidData = function(req,res,next){
 }
 
 exports.refreshCovidCases = function(req,res, next){
-    console.log("hlo")
     updateCovidDataInDatabase(function(err,result){
         if(err){
             return sendError(res,'server_error','server_error');

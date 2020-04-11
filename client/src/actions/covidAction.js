@@ -43,18 +43,17 @@ export const fetchCovidCountries = () => dispatch => {
 }
 
 export const fetchCovidData = (data) => dispatch => {
-  
+  // console.log(data.country_id);
     var requestObj = {
       method: 'POST',
       data: {
-        cntry : data.country_id
+        cntry : data.country_id 
       },
       url: API_ENDPOINT + '/covidreport/gt_cvd_data',
     };
     startLoader(dispatch,1);
     
     axios(requestObj).then((res) => {
-      stopLoader(dispatch);
       if (res ) {
         dispatch({
           type: "FETCH_COVID_DATA",
@@ -63,6 +62,7 @@ export const fetchCovidData = (data) => dispatch => {
           }
       });
       }
+      stopLoader(dispatch);
     })
       .catch((err) => {
         var err_msg = "Something went wrong";
