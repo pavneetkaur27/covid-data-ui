@@ -50,6 +50,10 @@ exports.fetchCovidData = function(req,res,next){
     var totalcovidcases     = [];
     var covidcases_by_date  = {};
 
+    if(!req.body.cntry){
+        return sendError(res,'invalid_parameters','invalid_parameters');
+    }
+
     if(req.body.cntry){
         query_string    = {
             country : req.body.cntry
