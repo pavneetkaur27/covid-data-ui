@@ -76,5 +76,29 @@ export const fetchCovidData = (data) => dispatch => {
         stopLoader(dispatch);
         console.log(err_msg);
       })
-  }
+}
+
+export const refreshCovidCases = () => dispatch =>{
+  var requestObj = {
+    method: 'POST',
+    url: API_ENDPOINT + '/covidreport/refsh_data',
+  };
+  startLoader(dispatch,1);
   
+  axios(requestObj).then((res) => {
+    stopLoader(dispatch);
+    alert("Data has been updated!");
+  })
+  .catch((err) => {
+    var err_msg = "Something went wrong";
+    if (err.response && err.response.statusText) {
+      err_msg = err.response.statusText;
+    }
+    if(err.response && err.response.data && err.response.data.message){
+      err_msg = err.response.data.message;
+    }
+    
+    stopLoader(dispatch);
+    console.log(err_msg);
+  })
+}

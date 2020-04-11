@@ -36,7 +36,7 @@ exports.fetchCovidCountry = function(req,res,next){
                 covid_countries : covid_countries
             });
         }
-
+        console.log(JSON.stringify(countries,null,2));
         return sendSuccess (res , {
             covid_countries : countries
         })
@@ -60,72 +60,80 @@ exports.fetchCovidData = function(req,res,next){
         }
     }
 
-    updateCovidDataInDatabase(function(err, result){
+    CovidCountry.findOne({
+        _id : req.body.cntry
+    },{
+        country_name : 1
+    },function(err, covidcountry){
+        if(err){
+            return sendError(res,'server_error','server_error');
+        }
 
-        CovidCountry.findOne({
-            _id : req.body.cntry
-        },{
-            country_name : 1
-        },function(err, covidcountry){
-            if(err){
-                return sendError(res,'server_error','server_error');
-            }
-    
-            CovidCase.find(
-                query_string,
-                {}
-                ,{
-                    sort :{
-                        createdAt : 1
-                    }
-                }, function(err, covidcases){
-                    if(err){
-                        return sendError(res,'server_error','server_error');
-                    }
-    
-                    if(covidcases.length == 0){
-                        return sendSuccess(res,{
-                            country_name    : covidcountry ? covidcountry.country_name : null,
-                            totalcovidcases : totalcovidcases
-                        });
-                    }
-                    // console.log(JSON.stringify(covidcases));
-                    for(var i = 0; i< covidcases.length ;i++){
-                        var covidcase = covidcases[i];
-                        if(!covidcases_by_date[covidcase.c_date]){
-                            covidcases_by_date[covidcase.c_date] = {};
-                        }
-                        covidcases_by_date[covidcase.c_date].confirmed_cases = covidcase.confirmed ? covidcase.confirmed : 0 ;
-                        covidcases_by_date[covidcase.c_date].death_cases = covidcase.deaths ?covidcase.deaths : 0;
-                    }
-    
-                    // console.log(covidcases_by_date);
-                    var now = new Date();
-                    now = now.setDate(now.getDate() -1);
-                    for (var d = new Date(2020, 0, 22); d < now ; d.setDate(d.getDate() + 1)) {
-                        var formatted_time  = moment(new Date(d)).tz('Asia/Kolkata');
-                        var covid_case_date = formatted_time.format('MM-DD-YYYY').toString();
-                        console.log(covid_case_date);
-                        if(covidcases_by_date[covid_case_date]){
-                            totalcovidcases.push({
-                                c_date              : covid_case_date,
-                                confirmed_cases     : covidcases_by_date[covid_case_date].confirmed_cases,
-                                death_cases         : covidcases_by_date[covid_case_date].death_cases
-                            })
-                        }else{
-                            totalcovidcases.push({
-                                c_date              : covid_case_date,
-                                confirmed_cases     : 0,
-                                death_cases         : 0
-                            })
-                        }
-                    }
+        CovidCase.find(
+            query_string,
+            {}
+            ,{
+                sort :{
+                    createdAt : 1
+                }
+            }, function(err, covidcases){
+                if(err){
+                    return sendError(res,'server_error','server_error');
+                }
+
+                if(covidcases.length == 0){
                     return sendSuccess(res,{
+                        total_countries : countries,
                         country_name    : covidcountry ? covidcountry.country_name : null,
                         totalcovidcases : totalcovidcases
                     });
-            })
+                }
+                // console.log(JSON.stringify(covidcases));
+                for(var i = 0; i< covidcases.length ;i++){
+                    var covidcase = covidcases[i];
+                    if(!covidcases_by_date[covidcase.c_date]){
+                        covidcases_by_date[covidcase.c_date] = {};
+                    }
+                    covidcases_by_date[covidcase.c_date].confirmed_cases = covidcase.confirmed ? covidcase.confirmed : 0 ;
+                    covidcases_by_date[covidcase.c_date].death_cases = covidcase.deaths ?covidcase.deaths : 0;
+                }
+
+                // console.log(covidcases_by_date);
+                var now = new Date();
+                now = now.setDate(now.getDate() -1);
+                for (var d = new Date(2020, 0, 22); d < now ; d.setDate(d.getDate() + 1)) {
+                    var formatted_time  = moment(new Date(d)).tz('Asia/Kolkata');
+                    var covid_case_date = formatted_time.format('MM-DD-YYYY').toString();
+                    // console.log(covid_case_date);
+                    if(covidcases_by_date[covid_case_date]){
+                        totalcovidcases.push({
+                            c_date              : covid_case_date,
+                            confirmed_cases     : covidcases_by_date[covid_case_date].confirmed_cases,
+                            death_cases         : covidcases_by_date[covid_case_date].death_cases
+                        })
+                    }else{
+                        totalcovidcases.push({
+                            c_date              : covid_case_date,
+                            confirmed_cases     : 0,
+                            death_cases         : 0
+                        })
+                    }
+                }
+                return sendSuccess(res,{
+                    country_name    : covidcountry ? covidcountry.country_name : null,
+                    totalcovidcases : totalcovidcases
+                });
         })
+    })
+}
+
+exports.refreshCovidCases = function(req,res, next){
+    console.log("hlo")
+    updateCovidDataInDatabase(function(err,result){
+        if(err){
+            return sendError(res,'server_error','server_error');
+        }   
+        return sendSuccess(res,{});
     })
 }
 
@@ -153,7 +161,9 @@ function updateCovidDataInDatabase(cb){
         }
             
         var coviddata = csvjson.toObject(resp.body);
-        // console.log(coviddata);
+        if(coviddata.length == 0){
+            return cb(null, true);
+        }
         for(var i = 0 ;i < coviddata.length;i++){
             var data = coviddata[i];
             
@@ -168,7 +178,9 @@ function updateCovidDataInDatabase(cb){
             }
         }
 
+        console.log(data_by_countries);
         for(var country in data_by_countries){
+            console.log(country);
             total_covid_cases.push({
                 country             : country,
                 confirmed_cases     : data_by_countries[country].confirmed_cases,
@@ -176,11 +188,12 @@ function updateCovidDataInDatabase(cb){
             })
         }
 
+        // console.log(total_covid_cases.length);
 
         var todo = total_covid_cases.length;
         var done = 0;
 
-        var cb1 = function(err, data_by_countries){
+        var cb1 = function(err, result){
             if(err){
                 console.log(err);
                 return cb(err,null);
@@ -188,7 +201,7 @@ function updateCovidDataInDatabase(cb){
             done++;
             if(todo == done){
                 console.log("done");
-                return cb(null, true);
+                return cb(null, todo);
             }else{
                 updateCovidDataInDB(total_covid_cases[done],covid_case_date.toString(),cb1);
             }
@@ -205,6 +218,7 @@ function updateCovidDataInDB(coviddata,case_date,cb){
         if(err){
             return cb(err);
         }
+        // console.log(JSON.stringify(covidcountry));
         if(covidcountry){
             updateCovidCaseInDB(coviddata,case_date,covidcountry._id,cb);
         }else{

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { withRouter } from 'react-router-dom';
-import {fetchCovidCountries,fetchCovidData} from '../actions/covidAction';
+import {fetchCovidCountries,fetchCovidData,refreshCovidCases} from '../actions/covidAction';
 import {Bar, ComposedChart,Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 class Dashboard extends Component {
@@ -10,6 +10,10 @@ class Dashboard extends Component {
     this.state = {
      
     }
+  }
+
+  refreshCovidData = () =>{
+    this.props.refreshCovidCases();
   }
 
   render(){
@@ -30,10 +34,7 @@ class Dashboard extends Component {
                         {this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].death_cases ? this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].death_cases : 0}
                         <div  className="card-info-title">Deaths</div>
                     </div>
-                    <div className="col-sm-4  no-padding text-align-center card-info-section">
-                        {this.props.covidPanel.coviddata.totalcountries}
-                        <div  className="card-info-title">Countries</div>
-                    </div>
+                  
                     <div className="col-sm-4  no-padding text-align-center card-info-section">
                         {(this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].confirmed_cases && this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-2].confirmed_cases )? ( (( ( this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].confirmed_cases - this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-2].confirmed_cases )/this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].confirmed_cases)* 100).toFixed(2)) + '%':0 + '%'}
                         <div  className="card-info-title">New Confirmed Growth Rate</div>
@@ -73,7 +74,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {fetchCovidCountries,fetchCovidData};
+const mapDispatchToProps = {fetchCovidCountries,fetchCovidData,refreshCovidCases};
 
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));

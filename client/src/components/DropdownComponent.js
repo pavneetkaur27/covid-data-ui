@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import { withRouter } from 'react-router-dom';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem'
-import {fetchCovidCountries,fetchCovidData} from '../actions/covidAction'
+import {fetchCovidCountries,fetchCovidData,refreshCovidCases} from '../actions/covidAction'
 
 class Dashboard extends Component {
   constructor(props){
@@ -25,6 +25,10 @@ class Dashboard extends Component {
         this.props.fetchCovidData({country_id : e.target.value});
       }
   } 
+
+  refreshCovidData = () =>{
+    this.props.refreshCovidCases();
+  }
 
   render(){
       console.log(this.props);
@@ -50,7 +54,9 @@ class Dashboard extends Component {
                  })}
             </Select>   
         </div> 
-       
+        <div className="col-lg-7 col-sm-7 no-margin no-padding ">
+            <button className="refresh-btn-style float-right" onClick={this.refreshCovidData}>Refresh Data</button>
+        </div>
       </div>
     );
   }
@@ -62,7 +68,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {fetchCovidCountries,fetchCovidData};
+const mapDispatchToProps = {fetchCovidCountries,fetchCovidData,refreshCovidCases};
 
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));

@@ -17,5 +17,7 @@ router.post('/gt_cvd_cntry',dataController.maindata.fetchCovidCountry);
 // get covid data
 router.post('/gt_cvd_data',dataController.maindata.fetchCovidData);
 
+// update covid data in database
+router.post('/refsh_data',dataController.maindata.refreshCovidCases);
 
 module.exports = router;
