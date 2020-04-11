@@ -24,7 +24,8 @@
     "universal-cookie": "^4.0.0"
   },
   "scripts": {
-    "start": "node --max_old_space_size=1900 --stack-size=300000 ./scripts/deploy.js > /var/log/covid-data-ui/express.log 2>&1 &",
+    "start": "PORT=9000 react-scripts start",
+    "deploy" : "node --max_old_space_size=1900 --stack-size=300000 ./scripts/deploy.js > /var/log/covid-data-ui/express.log 2>&1 &",
     "local": "PORT=9000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
