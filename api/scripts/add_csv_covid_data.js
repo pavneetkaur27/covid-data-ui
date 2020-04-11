@@ -20,7 +20,7 @@ mongoose.connection.on('error', function(err){
 
 mongoose.connection.on('connected', function(){
     console.log('Connected to mongodb!');   
-    console.log('------- COURSE ASSIGNMNET DELAY BY MENTORS----------');
+    console.log('------- Add Covid Data----------');
     addCovidDataInDB(function(){
         endScript();
     });
