@@ -1,36 +1,29 @@
 import React, { Component } from 'react';
-import {connect} from "react-redux";
-import { withRouter } from 'react-router-dom';
-import {fetchCovidData} from '../actions/covidAction'
+import CardComponent from './CardComponent';
 
-class Dashboard extends Component {
+class MainNavbar extends Component {
   constructor(props){
     super(props);
     this.state = {
      }
   }
 
-  componentDidMount(){
-    this.props.fetchCovidData();
-  }
-
+ 
   render(){
     return (
-      <div className="main-body">
-test
-        
+      <div id="mainnavbar">
+        <div className="navbar-contaniner" >
+          <div className="navbar-text center-all">
+            Coronavirus COVID-19 Interactive Map of Global Cases
+          </div>
+        </div>
+        <CardComponent />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-      // : state.lrnrReducer,
-  }
-}
-
-const mapDispatchToProps = {fetchCovidData};
 
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));
+
+export default (MainNavbar);

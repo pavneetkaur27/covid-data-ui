@@ -17,6 +17,17 @@ export default function (state = initialState, action) {
             }
         }
 
+        case 'FETCH_COVID_COUNTRIES' : {
+            return {...state,
+                covidcountries : action.payload.covidcountries
+            }
+        }
+
+        case 'FETCH_COVID_DATA' : {
+            return {...state,
+                coviddata : action.payload.coviddata
+            }
+        }
      
         default:
             return state;
