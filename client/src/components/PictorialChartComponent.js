@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { withRouter } from 'react-router-dom';
-import {fetchCovidCountries,fetchCovidData,refreshCovidCases} from '../actions/covidAction';
+import {fetchCovidCountries,fetchCovidData} from '../actions/covidAction';
 import {Bar, ComposedChart,Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 class Dashboard extends Component {
@@ -12,9 +12,6 @@ class Dashboard extends Component {
     }
   }
 
-  refreshCovidData = () =>{
-    this.props.refreshCovidCases();
-  }
 
   render(){
       console.log(this.props);
@@ -74,7 +71,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {fetchCovidCountries,fetchCovidData,refreshCovidCases};
+const mapDispatchToProps = {fetchCovidCountries,fetchCovidData};
 
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));
