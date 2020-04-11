@@ -9,7 +9,7 @@ NOTE: Please run script to initialise database. To run the script go to cd ./scr
 ## How to run the Client
 1. In another terminal, navigate to the `client` directory.
 2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the app in production or Run `npm local` to run in local environment. 
+3. Run `npm run start` to start the app in production or Run `npm run local` to run in local environment. 
 NOTE: Create log directories path as mentioned in package.json if running with `npm start`
 
 ## Check if they are connected
