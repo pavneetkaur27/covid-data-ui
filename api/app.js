@@ -33,15 +33,15 @@ const covidreport                 = require('./routes/covidreport');
 /*----------------------------------------------------------*/
 
 //connect_mongo
-// config.db;
+config.db;
 
 //connect_redis
-const client  = redis.createClient({
-  host : config.REDIS_HOST,
-  port : config.REDIS_PORT
-});
-// config.redis(client,sConf,logger);
-config.redis(client,sConf);
+// const client  = redis.createClient({
+//   host : config.REDIS_HOST,
+//   port : config.REDIS_PORT
+// });
+// // config.redis(client,sConf,logger);
+// config.redis(client,sConf);
 
 app.use(express.static(path.join(__dirname,"public")));
 app.use(function(req, res, next) {
@@ -76,12 +76,12 @@ app.use(session(
         secret:session_secret,
         proxy: true,
         resave: true,
-        store: new redisStore({ 
-          host: sConf.REDIS_HOST,
-          port: sConf.REDIS_PORT,
-          client: client,
-          ttl :  sConf.REDIS_TTL
-        }),
+        // store: new redisStore({ 
+        //   host: sConf.REDIS_HOST,
+        //   port: sConf.REDIS_PORT,
+        //   client: client,
+        //   ttl :  sConf.REDIS_TTL
+        // }),
         saveUninitialized: false,
         resave: false
     }

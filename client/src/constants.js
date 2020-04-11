@@ -1,4 +1,5 @@
-export const API_ENDPOINT = 'http://localhost:3000';
+// export const API_ENDPOINT = 'http://localhost:3000';
+export const API_ENDPOINT = 'http://3.135.224.242/:3000';
 
 
 export const NODE_VALUES = {
