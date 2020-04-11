@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
+    "deploy" : "fuser -n tcp -k 3000;node --max_old_space_size=1900 --stack-size=300000 ./bin/www >> /var/log/covid-data-sever/express/express.log 2>&1 &",
     "test": "find ./test -name 'test-*.js' | xargs mocha -R spec"
   },
   "keywords": [
