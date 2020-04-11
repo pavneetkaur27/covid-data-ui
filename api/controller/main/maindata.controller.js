@@ -83,7 +83,6 @@ exports.fetchCovidData = function(req,res,next){
 
                 if(covidcases.length == 0){
                     return sendSuccess(res,{
-                        total_countries : countries,
                         country_name    : covidcountry ? covidcountry.country_name : null,
                         totalcovidcases : totalcovidcases
                     });

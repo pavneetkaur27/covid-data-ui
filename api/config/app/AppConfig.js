@@ -2,8 +2,8 @@ require('dotenv').config();
 exports.server = {
     SERVER_PORT                             : Number(process.env.PORT) || 3000,
     MODE                                    : 'prod',
-    MONGO_URL                               : process.env.MONGO_URL || 'mongodb://localhost:27017/career',
-    MONGO_TEST_URL                          : process.env.MONGO_TEST_URL || 'mongodb://localhost:27017/career',
+    MONGO_URL                               : 'mongodb://localhost:27017/coviddata',
+    MONGO_TEST_URL                          : 'mongodb://localhost:27017/coviddata',
     SESSION_SECRET                          : process.env.REDIS_PASSWORD || 'zhdbcshvchdvhdvfd',
     REDIS_PASSWORD                          : process.env.REDIS_PASSWORD || '',
     REDIS_HOST                              : process.env.REDIS_HOST || 'localhost',
