@@ -31,6 +31,10 @@ class Dashboard extends Component {
                         <div  className="card-info-title">Deaths</div>
                     </div>
                     <div className="col-sm-4  no-padding text-align-center card-info-section">
+                        {this.props.covidPanel.coviddata.totalcountries}
+                        <div  className="card-info-title">Countries</div>
+                    </div>
+                    <div className="col-sm-4  no-padding text-align-center card-info-section">
                         {(this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].confirmed_cases && this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-2].confirmed_cases )? ( (( ( this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].confirmed_cases - this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-2].confirmed_cases )/this.props.covidPanel.coviddata.totalcovidcases[this.props.covidPanel.coviddata.totalcovidcases.length-1].confirmed_cases)* 100).toFixed(2)) + '%':0 + '%'}
                         <div  className="card-info-title">New Confirmed Growth Rate</div>
                     </div>

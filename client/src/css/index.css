@@ -174,15 +174,9 @@ html::-webkit-scrollbar-thumb {
 	margin-top: 0px;
 }
 
-@media (min-width: 600px ) and (max-width : 1788px){
- 
-    .lrnr-menubar .MuiList-padding{
-        padding : 0px!important;
-    }
-}
 
 @media only screen and (max-width: 768px){
-	.MuiDialog-container .MuiPaper-root{
-        margin : 10px;
-    }
+	.navbar-contaniner{
+		height: auto;
+	}
 }
