@@ -85,9 +85,10 @@ export const refreshCovidCases = () => dispatch =>{
   };
   startLoader(dispatch,1);
   
-  axios(requestObj).then((res) => {
+  return axios(requestObj).then((res) => {
     stopLoader(dispatch);
     alert("Data has been updated!");
+    return res;
   })
   .catch((err) => {
     var err_msg = "Something went wrong";

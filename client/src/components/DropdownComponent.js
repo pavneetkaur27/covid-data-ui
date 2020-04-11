@@ -26,7 +26,14 @@ class Dashboard extends Component {
   } 
 
   refreshCovidData = () =>{
-    this.props.refreshCovidCases();
+    this.props.refreshCovidCases()
+        .then( res => {
+            this.props.fetchCovidData({country_id :'ALL'});
+            this.setState({
+                selected_country : 'ALL'
+            })
+        })
+    ;
   }
 
   render(){
