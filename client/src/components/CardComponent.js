@@ -5,7 +5,7 @@ import {fetchCovidData} from '../actions/covidAction';
 import DropdownComponent from './DropdownComponent';
 import PictorialChartComponent  from './PictorialChartComponent';
 
-class Dashboard extends Component {
+class CardComponent extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -37,4 +37,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {fetchCovidData};
 
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CardComponent));

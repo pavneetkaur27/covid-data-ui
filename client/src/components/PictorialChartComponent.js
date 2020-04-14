@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import { withRouter } from 'react-router-dom';
 import {fetchCovidCountries,fetchCovidData} from '../actions/covidAction';
-import {Bar, ComposedChart,Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
+import {Bar, ComposedChart,Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,ResponsiveContainer} from 'recharts';
 import Loader from './shared/Loader';
 
-class Dashboard extends Component {
+class PictorialChartComponent extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -42,8 +42,9 @@ class Dashboard extends Component {
                         <div  className="card-info-title">Mortality Rate</div>
                     </div>
                 </div>
-                <div style={{marginTop:40}}>
-                    <ComposedChart width={1000} height={250} data={this.props.covidPanel.coviddata.totalcovidcases}>
+                <div className="tt" style={{marginTop:40}}>
+                  <ResponsiveContainer>
+                    <ComposedChart data={this.props.covidPanel.coviddata.totalcovidcases}>
                     <XAxis dataKey="c_date" />
                     <YAxis yAxisId="left" />
                     <YAxis yAxisId="right" orientation="right" />
@@ -54,6 +55,7 @@ class Dashboard extends Component {
                     <Bar yAxisId="right" dataKey="death_cases" barSize={20} fill="rgb(169, 52, 57)" />
                     <Line yAxisId="left" type="monotone" dataKey="confirmed_cases" stroke="#ff7300" />
                     </ComposedChart>
+                    </ResponsiveContainer>
                 </div>
             </div>
           );
@@ -76,4 +78,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {fetchCovidCountries,fetchCovidData};
 
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(PictorialChartComponent));

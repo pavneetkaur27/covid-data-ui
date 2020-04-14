@@ -5,7 +5,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem'
 import {fetchCovidCountries,fetchCovidData,refreshCovidCases} from '../actions/covidAction'
 
-class Dashboard extends Component {
+class DropdownComponent extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -40,7 +40,7 @@ class Dashboard extends Component {
       console.log(this.props);
     return (
       <div className="row no-margin no-padding">
-        <div className="col-lg-5 col-sm-5 no-margin no-padding center-all" >
+        <div className="col-lg-5 col-sm-6 no-margin no-padding center-all" >
             <div className="dropdown-label">Country:</div>
             <Select className="country-dropdown"
                 value={this.state.selected_country}
@@ -60,8 +60,8 @@ class Dashboard extends Component {
                  })}
             </Select>   
         </div> 
-        <div className="col-lg-7 col-sm-7 no-margin no-padding ">
-            <button className="refresh-btn-style float-right" onClick={this.refreshCovidData}>Refresh Data</button>
+        <div className="col-lg-7 col-sm-6 no-margin no-padding ">
+            <button className="refresh-btn-style " onClick={this.refreshCovidData}>Refresh Data</button>
         </div>
       </div>
     );
@@ -77,4 +77,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {fetchCovidCountries,fetchCovidData,refreshCovidCases};
 
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(DropdownComponent));
