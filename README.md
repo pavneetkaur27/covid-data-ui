@@ -12,7 +12,7 @@ NOTE: Please run script to initialise database. To run the script go to cd ./scr
 2. Run `npm install` to install all dependencies.
 3. Run `npm run start` or `npm run local` to run in local environment. 
 
-NOTE: Create log directories path as mentioned in package.json if running with `npm run deploy` to run in production
+NOTE: Create log directories path as mentioned in package.json if running with `npm run deploy` to run in production.
 
 
 ## Check if they are connected
