@@ -42,7 +42,7 @@ class PictorialChartComponent extends Component {
                         <div  className="card-info-title">Mortality Rate</div>
                     </div>
                 </div>
-                <div className="tt" style={{marginTop:40}}>
+                <div className="responsive-chart" style={{marginTop:40}}>
                   <ResponsiveContainer>
                     <ComposedChart data={this.props.covidPanel.coviddata.totalcovidcases}>
                     <XAxis dataKey="c_date" />
