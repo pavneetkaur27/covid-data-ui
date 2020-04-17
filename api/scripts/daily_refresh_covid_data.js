@@ -21,8 +21,14 @@ mongoose.connection.on('error', function(err){
 mongoose.connection.on('connected', function(){
     console.log('Connected to mongodb!');   
     console.log('------- Refresh Covid Data----------');
-    refreshData(function(){
-        endScript();
+    refreshData(function(err, result){
+        if(err){
+            console.log("Err : "+err);
+            endScript();
+        }else{
+            console.log("finished");
+            endScript();
+        }
     });
 });
 
@@ -47,12 +53,12 @@ function refreshData(finalCb){
     
     request.get(options,function(err, resp){
         if(err){
-            return cb(err, null);
+            return finalCb(err, null);
         }
             
         var coviddata = csvjson.toObject(resp.body);
         if(coviddata.length == 0){
-            return cb(null, true);
+            return finalCb(null, true);
         }
         for(var i = 0 ;i < coviddata.length;i++){
             var data = coviddata[i];
@@ -84,7 +90,7 @@ function refreshData(finalCb){
         var cb1 = function(err, result){
             if(err){
                 console.log(err);
-                return cb(err,null);
+                return finalCb(err,null);
             }
             done++;
             if(todo == done){
