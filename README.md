@@ -18,6 +18,5 @@ NOTE: Create log directories path as mentioned in package.json if running with `
 ## Check if they are connected
 With the two apps running, open your browser in http://localhost:9000/.
 
-For Live demo, open you browser in http://3.135.224.242:9000/ 
 
 
